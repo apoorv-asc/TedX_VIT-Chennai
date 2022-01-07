@@ -1,0 +1,48 @@
+.textArea {
+    padding: 1rem;
+    color: white;
+    background-color: rgb(31, 31, 31);
+    margin: 2rem auto;
+    width: 80rem;
+    max-width: 95%;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  }
+  
+  .CentreImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .textContent {
+    font-size: 20px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+  }
+  
+  .buttonClass {
+    font: inherit;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border: 1px solid #c7220c;
+    background-color: #c7220c;
+    color: white;
+    margin-left: 45%;
+    border-radius: 5px;
+    margin-right: 1rem;
+    font-size: 25px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+  }
+  
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .buttonClass:hover,
+  .buttonClass:active {
+    background-color: #ee442d;
+    border-color: #c7220c;
+  }
+  
