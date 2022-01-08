@@ -10,11 +10,14 @@ app.use(express.static("public"));
 const connectDB = require('./config/db');
 connectDB();
 
+// @@@@@@@@@@@@@@@@@@ Models @@@@@@@@@@@@@@@@@@@@
+const Post = require('./models/Post')
+const User = require("./models/User")   
+
 // ========= PASSPORT ========
 var passport             = require("passport");
 var LocalStrategy        = require("passport-local");
 var passportLocalMongoose= require("passport-local-mongoose");
-var User                 = require("./models/User")   
 app.use(require("express-session")({
     secret:"Yeh Jawani Hai Deewani",
     resave:false,
@@ -46,9 +49,6 @@ app.use(function(req,res,next){
     next();
 })
 
-
-// @@@@@@@@@@@@@@@@@@ Models @@@@@@@@@@@@@@@@@@@@
-const Post = require('./models/Post')
 
 // <----------------- Signup ----------------->
 app.get("/reg_user/add_user",isLoggedIn,function(req,res){
