@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <%- include("partials/navbar"); %>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 style="margin: 30px 0px;text-align: center;font-size: 100px;">Edit <%=post.title%></h1>
+            </div>
+            <form style="width: 100%;margin:0 auto" method="POST" action="/reg_user/edit_blog/<%=post.id%>">
+                <div class="form-group">
+                    <h class="btn btn-info">Title</h>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" value="<%= post.title %>" type="text" name="title">
+                </div>
+                <div class="form-group">
+                    <h class="btn btn-info">URL of the PIC</h>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" value="<%= post.url %>" type="text" name="url">
+                </div>
+                <div class="form-group">
+                    <h class="btn btn-info">Author</h>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" value="<%= post.author %>" type="text" name="author">
+                </div>
+                <div class="form-group">
+                    <h class="btn btn-info">Date</h>
+                </div>
+                <div class="form-group" style="width: 20%;">
+                    <input class="form-control" value="<%= date %>" type="date" name="date">
+                </div>
+                <div class="form-group">
+                    <h class="btn btn-info">Body</h>
+                </div>
+                <div class="form-group">
+                    <textarea rows="50" class="form-control" name="body" ><%=post.body%></textarea>
+                </div>
+                <div class="form-group">
+                    <h class="btn btn-info">Upvotes</h>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" value="<%= post.upvotes %>" type="number" name="upvotes">
+                </div>
+                <div class="form-group">
+                    <a href="/reg_user" class="btn btn-warning">Cancel</a>
+                </div>
+                <div class="form-group">
+                    <button  class="btn btn-lg btn-primary btn-block">Submit</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
