@@ -13,6 +13,7 @@ connectDB();
 // @@@@@@@@@@@@@@@@@@ Models @@@@@@@@@@@@@@@@@@@@
 const Post = require('./models/Post')
 const User = require("./models/User")   
+const Comments = require('./models/Comments')
 
 // ========= PASSPORT ========
 var passport             = require("passport");
@@ -84,6 +85,17 @@ app.get("/logout",function(req,res){
     res.redirect("/signin");
 });
 
+//======== Change Password ============
+app.post('/change_password',async (req,res)=>{
+    User.findByUsername(req.body.email).then((sanitizedUser)=>{
+        if (sanitizedUser){
+            sanitizedUser.setPassword(req.body.password, function(){
+                sanitizedUser.save();
+                res.redirect('/');
+            });
+        }
+    })
+})
 
 // <-------------- Navigation Routes -------------->
 app.get("/", (req, res) => {
@@ -103,11 +115,63 @@ app.get("/speakers", (req, res) => {
 });
 
 app.get('/blogs',async (req,res)=>{
-    const posts = await Post.find({});
-    res.render('blogs',{posts:posts});
+    const posts = await Post.find({}).sort({date:-1});
+    res.render('blog',{posts:posts});
 })
 
-// <------------- Editing Blog Routes -------------->
+
+app.get('/blogs/:id/:type',async (req,res)=>{
+    // type 1 : Simple redirect to this blog
+    // type 2 : Blog is liked
+    // type 3 : Blog is unliked
+
+    const post = await Post.findById(req.params.id);
+    const comments = await Comments.find({"post_id":req.params.id}).sort({upvotes:-1,date:-1});
+
+    if(req.params.type==='simple'){        
+        res.render('blog_posted',{post:post,comments:comments});
+    }else if(req.params.type==='liked'){
+        post.upvotes = post.upvotes+1;
+        await post.save();
+        res.render('blog_posted',{post:post,comments:comments});
+    }else if(req.params.type==='unliked'){
+        post.upvotes = post.upvotes-1;
+        await post.save();
+        res.render('blog_posted',{post:post,comments:comments});
+    }else{
+        res.redirect('/');
+    }
+})
+
+app.post('/comment_post/:id',async (req,res)=>{
+    const comment = new Comments({
+        post_id:req.params.id,
+        author:req.body.author,
+        avatar:req.body.avatar,
+        text:req.body.text,
+        upvotes:0
+    });
+    await comment.save();
+    res.redirect('/blogs/'+req.params.id+'/simple');
+})
+
+app.get('/comment_post/like/:pid/:cid',async (req,res)=>{
+    await Comments.updateOne({_id:req.params.cid},{$inc:{upvotes:1}});
+    // const comment = await Comments.findById(req.params.cid);
+    // comment.upvotes = comment.upvotes+1;
+    // await comment.save();
+    res.redirect('/blogs/'+req.params.pid+'/simple');
+})
+
+app.get('/comment_post/unlike/:pid/:cid',async (req,res)=>{
+    await Comments.updateOne({_id:req.params.cid},{$inc:{upvotes:-1}});
+    // const comment = await Comments.findById(req.params.cid);
+    // comment.upvotes = comment.upvotes-1;
+    // await comment.save();
+    res.redirect('/blogs/'+req.params.pid+'/simple');
+})
+
+// <------------- Registered User's Routes -------------->
 app.get("/reg_user",isLoggedIn,async (req,res)=>{
     const posts = await Post.find({});
     res.render('reg_user',{posts:posts})
@@ -162,7 +226,17 @@ app.post('/reg_user/edit_blog/:id',isLoggedIn,async (req,res)=>{
     res.redirect('/reg_user');
 })
 
-app.get('/reg_user/delete/:id',isLoggedIn,async (req,res)=>{
+app.get('/reg_user/edit_comments/:id',async (req,res)=>{
+    const comments =await Comments.find({post_id:req.params.id});
+    res.render('edit_comments',{comments:comments});
+})
+
+app.get('/reg_user/delete_comments/:pid/:cid',async (req,res)=>{
+    await Comments.findByIdAndDelete(req.params.cid);
+    res.redirect('/reg_user/edit_comments/'+req.params.pid);
+})
+
+app.get('/reg_user/delete_blog/:id',isLoggedIn,async (req,res)=>{
     await Post.findByIdAndDelete(req.params.id);
     res.redirect('/reg_user')
 })

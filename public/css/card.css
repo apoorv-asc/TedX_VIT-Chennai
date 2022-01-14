@@ -41,6 +41,18 @@
     font-size: 18px;
   }
   
+  .card .read {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: rgb(32, 75, 218);
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
   .card button:hover {
     opacity: 0.7;
   }

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <%- include("partials/navbar"); %>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 style="margin: 30px 0px;text-align: center;font-size: 100px;">Delete comments</h1>
+            </div>
+            
+            <% comments.forEach((comment)=>{  %>
+                <div class="alert alert-success" role="alert">
+                    <p style="text-align: left;"><%= comment.text  %></p><br>
+                    <span><button class="btn btn-danger" onclick="location.href='/reg_user/delete_comments/<%=comment.post_id%>/<%=comment.id%>';">Delete</button></span>
+                </div>
+            <% }) %>
+
+        </div>
+        <%- include("partials/navbar_script"); %>
+    </body>
+</html>
