@@ -86,11 +86,11 @@ app.get("/logout",function(req,res){
 });
 
 //======== Change Password ============
-app.get('/reg_user/change_password',(req,res)=>{
+app.get('/reg_user/change_password',isLoggedIn,(req,res)=>{
     res.render('change_password');
 })
 
-app.post('/reg_user/change_password',async (req,res)=>{
+app.post('/reg_user/change_password',isLoggedIn,async (req,res)=>{
     User.findByUsername(req.body.email).then((sanitizedUser)=>{
         if (sanitizedUser){
             sanitizedUser.setPassword(req.body.password, function(){
@@ -161,17 +161,11 @@ app.post('/comment_post/:id',async (req,res)=>{
 
 app.get('/comment_post/like/:pid/:cid',async (req,res)=>{
     await Comments.updateOne({_id:req.params.cid},{$inc:{upvotes:1}});
-    // const comment = await Comments.findById(req.params.cid);
-    // comment.upvotes = comment.upvotes+1;
-    // await comment.save();
     res.redirect('/blogs/'+req.params.pid+'/simple');
 })
 
 app.get('/comment_post/unlike/:pid/:cid',async (req,res)=>{
     await Comments.updateOne({_id:req.params.cid},{$inc:{upvotes:-1}});
-    // const comment = await Comments.findById(req.params.cid);
-    // comment.upvotes = comment.upvotes-1;
-    // await comment.save();
     res.redirect('/blogs/'+req.params.pid+'/simple');
 })
 
@@ -187,13 +181,24 @@ app.get("/reg_user/add_blog",isLoggedIn,(req,res)=>{
 
 app.post('/reg_user/add_blog',isLoggedIn,async (req,res)=>{
     try{
+        let dd,mm;
+        const dop = new Date(req.body.date);
+        if((dop).getUTCDate()<10)
+            dd=`0${dop.getUTCDate()}`;
+        else
+            dd=`${dop.getUTCDate()}`;
+        if(dop.getUTCMonth()+1<10)
+            mm=`0${dop.getUTCMonth()+1}`
+        else
+            mm=`${dop.getUTCMonth()+1}`
         const post=new Post({
             title:req.body.title,
             url:req.body.url,
             author:req.body.author,
             date:req.body.date,
             body:req.body.body,
-            upvotes:req.body.upvotes
+            upvotes:req.body.upvotes,
+            display_date:`${dd}-${mm}+${dop.getUTCFullYear()}`
         })
         await post.save();
         res.redirect('/reg_user')
@@ -220,22 +225,36 @@ app.get('/reg_user/edit_blog/:id',isLoggedIn,async (req,res)=>{
 
 app.post('/reg_user/edit_blog/:id',isLoggedIn,async (req,res)=>{
     const post = await Post.findById(req.params.id);
+
+    let dd,mm;
+    const dop = new Date(req.body.date);
+    if((dop).getUTCDate()<10)
+        dd=`0${dop.getUTCDate()}`;
+    else
+        dd=`${dop.getUTCDate()}`;
+    if(dop.getUTCMonth()+1<10)
+        mm=`0${dop.getUTCMonth()+1}`
+    else
+        mm=`${dop.getUTCMonth()+1}`
+
     post.title=req.body.title;
     post.url=req.body.url;
     post.body=req.body.body;
     post.author=req.body.author;
     post.date=req.body.date;
     post.upvotes=req.body.upvotes;
+    post.display_date=`${dd}-${mm}+${dop.getUTCFullYear()}`;
+
     await post.save();
     res.redirect('/reg_user');
 })
 
-app.get('/reg_user/edit_comments/:id',async (req,res)=>{
+app.get('/reg_user/edit_comments/:id',isLoggedIn,async (req,res)=>{
     const comments = await Comments.find({"post_id":req.params.id}).sort({upvotes:-1,date:-1});
     res.render('edit_comments',{comments:comments});
 })
 
-app.get('/reg_user/delete_comments/:pid/:cid',async (req,res)=>{
+app.get('/reg_user/delete_comments/:pid/:cid',isLoggedIn,async (req,res)=>{
     await Comments.findByIdAndDelete(req.params.cid);
     res.redirect('/reg_user/edit_comments/'+req.params.pid);
 })

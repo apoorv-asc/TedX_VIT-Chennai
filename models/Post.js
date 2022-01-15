@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     title : {
-      type: String,
-      required: true
+      type: String
     },
     url: {
-        type: String
+      type: String
     },
     author: {
       type: String
@@ -16,11 +15,14 @@ const PostSchema = new Schema({
       type: String
     },
     upvotes:{
-        type : Number,
-        default: 0
+      type : Number,
+      default: 0
     },
     date: {
-        type: Date
+      type: Date
+    },
+    display_date:{
+      type : String
     }
   });
   
