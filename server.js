@@ -103,6 +103,7 @@ app.post('/reg_user/change_password',isLoggedIn,async (req,res)=>{
 
 // <-------------- Navigation Routes -------------->
 app.get("/", (req, res) => {
+    console.log('Opening homepage');
   res.render("index");
 });
 
