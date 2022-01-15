@@ -198,7 +198,7 @@ app.post('/reg_user/add_blog',isLoggedIn,async (req,res)=>{
             date:req.body.date,
             body:req.body.body,
             upvotes:req.body.upvotes,
-            display_date:`${dd}-${mm}+${dop.getUTCFullYear()}`
+            display_date:`${dd}-${mm}-${dop.getUTCFullYear()}`
         })
         await post.save();
         res.redirect('/reg_user')
@@ -243,7 +243,7 @@ app.post('/reg_user/edit_blog/:id',isLoggedIn,async (req,res)=>{
     post.author=req.body.author;
     post.date=req.body.date;
     post.upvotes=req.body.upvotes;
-    post.display_date=`${dd}-${mm}+${dop.getUTCFullYear()}`;
+    post.display_date=`${dd}-${mm}-${dop.getUTCFullYear()}`;
 
     await post.save();
     res.redirect('/reg_user');
