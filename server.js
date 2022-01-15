@@ -264,6 +264,6 @@ app.get('/reg_user/delete_blog/:id',isLoggedIn,async (req,res)=>{
     res.redirect('/reg_user')
 })
 
-app.listen(process.env.PORT || 80, process.env.IP, () => {
+app.listen(5000 , () => {
   console.log("Connected to server on Port 5000");
 });
