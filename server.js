@@ -266,5 +266,5 @@ app.get('/reg_user/delete_blog/:id',isLoggedIn,async (req,res)=>{
 })
 
 app.listen(5000, process.env.IP, () => {
-  console.log("Connected to server on Port 80");
+  console.log("Connected to server on Port 5000");
 });
