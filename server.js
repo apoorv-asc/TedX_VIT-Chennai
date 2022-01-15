@@ -103,7 +103,7 @@ app.post('/reg_user/change_password',isLoggedIn,async (req,res)=>{
 
 // <-------------- Navigation Routes -------------->
 app.get("/", (req, res) => {
-  res.send('Site is up');
+  res.render("index");
 });
 
 app.get("/tedcircles", (req, res) => {
@@ -264,6 +264,6 @@ app.get('/reg_user/delete_blog/:id',isLoggedIn,async (req,res)=>{
     res.redirect('/reg_user')
 })
 
-app.listen(5001 , () => {
+app.listen(5001, () => {
   console.log("Connected to server on Port 5000");
 });
