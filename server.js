@@ -86,7 +86,11 @@ app.get("/logout",function(req,res){
 });
 
 //======== Change Password ============
-app.post('/change_password',async (req,res)=>{
+app.get('/reg_user/change_password',(req,res)=>{
+    res.render('change_password');
+})
+
+app.post('/reg_user/change_password',async (req,res)=>{
     User.findByUsername(req.body.email).then((sanitizedUser)=>{
         if (sanitizedUser){
             sanitizedUser.setPassword(req.body.password, function(){
@@ -173,7 +177,7 @@ app.get('/comment_post/unlike/:pid/:cid',async (req,res)=>{
 
 // <------------- Registered User's Routes -------------->
 app.get("/reg_user",isLoggedIn,async (req,res)=>{
-    const posts = await Post.find({});
+    const posts = await Post.find({}).sort({date:-1});
     res.render('reg_user',{posts:posts})
 })
 
@@ -227,7 +231,7 @@ app.post('/reg_user/edit_blog/:id',isLoggedIn,async (req,res)=>{
 })
 
 app.get('/reg_user/edit_comments/:id',async (req,res)=>{
-    const comments =await Comments.find({post_id:req.params.id});
+    const comments = await Comments.find({"post_id":req.params.id}).sort({upvotes:-1,date:-1});
     res.render('edit_comments',{comments:comments});
 })
 

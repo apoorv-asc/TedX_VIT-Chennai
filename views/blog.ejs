@@ -51,7 +51,7 @@
             <p style="font-size: 40px; text-align: center; font-family: 'Josefin Sans', sans-serif;">Presenting
                 TEDxVITChennai's Blog Channel</p>
 
-                <div class="row">
+                <div class="row" style="display:flex;flex-wrap:wrap">
                     <% posts.forEach((post)=>{ %>
                         <div class="col-md-4">
                             <div id="card" style="margin-bottom: 30px;">
@@ -63,7 +63,7 @@
                                     <%=post.date.getUTCDate()%>-<%=post.date.getUTCMonth()%>-<%=post.date.getUTCFullYear()%>
                                 </p>
                                 <br><br>
-                                <p id="name" style="margin-bottom: 30px;">
+                                <p id="name">
                                     <%= post.author %>
                                 </p>
                                 <br>
