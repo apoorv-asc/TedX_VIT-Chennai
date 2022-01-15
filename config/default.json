@@ -1,0 +1,4 @@
+{
+    "mongoURI":"mongodb+srv://apoorv123:apoorv123@cluster0.rsjn0.mongodb.net/TedXVIT_Chennai?retryWrites=true&w=majority",
+    "jwtSecret":"mysecrettoken"
+}
