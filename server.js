@@ -107,7 +107,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/tedcircles", (req, res) => {
-  res.render("tedcircles");
+  res.render("tedcirclesnew");
 });
 
 app.get("/editions", (req, res) => {
