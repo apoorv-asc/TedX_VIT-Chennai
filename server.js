@@ -111,7 +111,7 @@ app.get("/tedcircles", (req, res) => {
 });
 
 app.get("/recruitments", (req, res) => {
-    res.render("recruitments");
+    res.send("<p>Hi</p>");
 });
 
 app.get("/editions", (req, res) => {
