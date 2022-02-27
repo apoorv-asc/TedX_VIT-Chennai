@@ -106,12 +106,12 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/tedcircles", (req, res) => {
-  res.render("tedcirclesnew");
-});
-
 app.get("/recruitments", (req, res) => {
     res.send("<p>Hi</p>");
+});
+
+app.get("/tedcircles", (req, res) => {
+  res.render("tedcirclesnew");
 });
 
 app.get("/editions", (req, res) => {
