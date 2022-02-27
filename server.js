@@ -107,7 +107,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/recruitments", (req, res) => {
-    res.send("<p>Hi</p>");
+    res.render("recruitments");
 });
 
 app.get("/tedcircles", (req, res) => {
