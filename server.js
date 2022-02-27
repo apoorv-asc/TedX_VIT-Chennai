@@ -110,6 +110,10 @@ app.get("/tedcircles", (req, res) => {
   res.render("tedcirclesnew");
 });
 
+app.get("/recruitments", (req, res) => {
+    res.render("recruitments");
+});
+
 app.get("/editions", (req, res) => {
   res.render("editions");
 });
