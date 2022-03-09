@@ -1,3 +1,39 @@
+#date1 {
+    color: red;
+    margin-top: 40px;
+    padding: 5px 20px 5px 20px;
+    border: 2px solid white;
+    font-size: 2vw;
+    font-weight: 500;
+    font-family: Catamaran, sans-serif;
+}
+
+@media only screen and (max-width: 500px) {
+    #date1 {
+        font-size: 12px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+#date2 {
+    color: white;
+    margin-top: 40px;
+    padding: 5px 20px 5px 20px;
+    border: 2px solid red;
+    font-size: 2vw;
+    font-weight: 500;
+    font-family: Catamaran, sans-serif;
+    background-color: red;
+}
+
+@media only screen and (max-width: 500px) {
+    #date2 {
+        font-size: 12px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
 #card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: white;
